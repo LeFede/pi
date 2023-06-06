@@ -1,17 +1,27 @@
-const { Videogame } = require("#db")
+const { Videogame, Genre } = require("#db")
 
 module.exports = async (req, res) => {
-  const { name, description, rating, genres, released } = req.body
+  // TODO: receive genres
+  const { name, description, rating, released, image, platforms } = req.body
+
   try {
     const newVideogame = await Videogame.create({
       name,
       description,
       rating,
-      genres,
-      released
+      released,
+      image,
+      platforms,
     })
-    res.status(200).json({ message: newVideogame })
-  } catch (err) {
-    res.status(400).json({ message: err })
+
+    // TODO: id must be dynamic
+    const genres = await Genre.findOne({ where: { id: 4 } }) 
+    const genres2 = await Genre.findOne({ where: { id: 3 } })
+
+    newVideogame.setGenres([genres, genres2])
+
+    res.status(200).send({ message: newVideogame })
+  } catch (error) {
+    res.status(400).send({ error })
   }
 }

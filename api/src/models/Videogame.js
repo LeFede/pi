@@ -16,25 +16,35 @@ module.exports = (sequelize) => {
     },
 
     rating: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validation: {
-        min: 0,
-        max: 10,
+        min: 0.00,
+        max: 5.00,
       }
     },
 
-    // platforms: {
+    // genres: {
     //
     // },
     //
-    // releaseDate: {
-    //
-    // },
-    //
-    // image: {
-    //
-    // }
+    released: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
+    platforms: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false
+    },
+
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+
+  }, 
+  {
+    timestamps: false,
   });
 };

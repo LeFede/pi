@@ -16,8 +16,9 @@ const adaptedVideogame = (game) => ({
 }) 
 
 const adaptedGenre = (genre) => ({
-  id    : genre.id,
-  name  : genre.name,
+  ...genre
+  // id    : genre.id,
+  // name  : genre.name,
 })
 
 const ENDPOINTS = {
@@ -50,7 +51,8 @@ const getVideogamesQueryAdapter = async (gameName) => {
 const getGenresAdapter = async () => {
   const res = await fetch(`${ENDPOINTS.genres}?key=${API_KEY}`)
   const { results: genres } = await res.json()
-
+  
+  // return genres
   return genres.map(adaptedGenre)
 }
 

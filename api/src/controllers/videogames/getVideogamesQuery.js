@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   try {
     const response = await getVideogamesQueryAdapter(search)
     res.status(200).send(response)
-  } catch (err) {
+  } catch (error) {
+    res.status(404).send({ error })
   }
 }
