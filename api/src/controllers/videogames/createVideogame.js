@@ -15,10 +15,10 @@ module.exports = async (req, res) => {
     })
 
     // TODO: id must be dynamic
-    const genres = await Genre.findOne({ where: { id: 4 } }) 
-    const genres2 = await Genre.findOne({ where: { id: 3 } })
+    // const genres = await Genre.findOne({ where: { id: 4 } }) 
+    // const genres2 = await Genre.findOne({ where: { id: 3 } })
 
-    newVideogame.setGenres([genres, genres2])
+    newVideogame.setGenres(platforms)
 
     res.status(200).send({ message: newVideogame })
   } catch (error) {

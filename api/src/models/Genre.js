@@ -4,8 +4,12 @@ module.exports = (sequelize) => {
   sequelize.define('genre', {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
-    }
+      allowNull: false,
+    },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     timestamps: false,

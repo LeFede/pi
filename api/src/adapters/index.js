@@ -16,9 +16,10 @@ const adaptedVideogame = (game) => ({
 }) 
 
 const adaptedGenre = (genre) => ({
-  ...genre
-  // id    : genre.id,
-  // name  : genre.name,
+  // ...genre
+  id    : genre.id,
+  name  : genre.name,
+  slug  : genre.slug,
 })
 
 const ENDPOINTS = {
@@ -27,8 +28,35 @@ const ENDPOINTS = {
 }
 
 const getVideogamesAdapter = async () => {
-  const res  = await fetch(`${ENDPOINTS.games}?key=${API_KEY}`)
-  const { results: games } = await res.json()
+  // const promises = [
+  //   fetch(`${ENDPOINTS.games}?page_size=40&key=${API_KEY}`),
+  //   fetch(`${ENDPOINTS.games}?page_size=40&key=${API_KEY}`),
+  //   fetch(`${ENDPOINTS.games}?page_size=20&key=${API_KEY}`),
+  // ]
+  // const results = Promise.resolveAll(promises)
+  // const { results: games } = await res.json()
+
+  // return games.map(adaptedVideogame)
+
+  // return []
+  const promises = [
+    fetch(`${ENDPOINTS.games}?page_size=20&key=${API_KEY}`),
+    fetch(`${ENDPOINTS.games}?page_size=20&page=2&key=${API_KEY}`),
+    fetch(`${ENDPOINTS.games}?page_size=20&page=3&key=${API_KEY}`),
+    fetch(`${ENDPOINTS.games}?page_size=20&page=4&key=${API_KEY}`),
+    fetch(`${ENDPOINTS.games}?page_size=20&page=5&key=${API_KEY}`),
+  ]
+
+  const results = await Promise.all(promises)
+  const jsonPromises = results.map(e => e.json())
+  let games = await Promise.all(jsonPromises)
+
+  games = games.reduce((prev, curr) => {
+    return [
+      ...prev,
+      ...curr.results
+    ]
+  }, [])
 
   return games.map(adaptedVideogame)
 }
